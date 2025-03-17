@@ -31,11 +31,10 @@ public class Matricula {
     public double getNota(){return nota;}
 
     public void setNota(double nota){
-        if(nota >= 0 && nota <= 10){
-            this.nota = nota;
-        }else{
+        if(!(nota >= 0 && nota <= 10)) {
             System.out.println("Nota inválida.");
         }
+        this.nota = nota;
     }
 
     public void exibirMatricula(){

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 // Escola vai gerenciar o cadastro de alunos,
 // cursos e matrículas
@@ -19,10 +20,9 @@ public class Escola {
                 System.out.println("Já tem aluno com esta matrícula");
                 return;
             }
-
-            alunos.add(aluno);
-            System.out.println("Aluno cadastrado com sucesso");
         }
+        alunos.add(aluno);
+        System.out.println("Aluno cadastrado com sucesso");
     }
 
     public void cadastrarCurso(Curso curso){
@@ -31,22 +31,22 @@ public class Escola {
                 System.out.println("Já tem curso com esta codigo");
                 return;
             }
-
-            cursos.add(curso);
-            System.out.println("Curso cadastrado com sucesso");
         }
+        cursos.add(curso);
+        System.out.println("Curso cadastrado com sucesso");
     }
 
     public void matricularAluno(Matricula matricula){
         for(Matricula m : matriculas){
             if(m.aluno.matricula.equals(matricula.aluno.matricula) &&
             m.curso.codigo.equals(matricula.curso.codigo)) {
-                System.out.println("Aluno ja esta matriculado neste curso");
+                System.out.println("Aluno ja esta matriculado neste curso.");
                 return;
             }
         }
 
         matriculas.add(matricula);
+        System.out.println("Aluno cadastrado com sucesso.");
     }
 
     // Remover a matricula de um aluno.matricula em um curso.codigo
@@ -97,19 +97,44 @@ public class Escola {
 
     //Atribui uma nota a uma matricula especifica
     //Regra: A nota deve ser entre 0 e 10; caso contrario, msg de erro
-    public void atribuirNota(){
-
+    public void atribuirNota(Matricula matricula, double nota){
+        matricula.setNota(nota);
     }
 
     //Busca alunos pelo nome (case insensitive)
-    public void buscarAlunoPorNome(){
-
+    public void buscarAlunoPorNome(String nome){
+        for (Aluno a : alunos){
+            if (a.nome.equals(nome)){
+                System.out.printf("Aluno: " + a.nome + " Matricula: " + a.matricula);
+                return;
+            }
+        }
+        System.out.printf("Aluno não matriculado");
     }
 
     //Lista todos os cursos com media de notas
     // acima de um determinado valor (parametro)
-    public void listarCursosComMediaAcima(){
+    public void listarCursosComMediaAcima(double notaMediaDeCorte){
 
+        List<String> cursosComMediaMaiorQueRecebido = new ArrayList<>();
+
+        for (Curso c: cursos){
+            double somaNotas = 0;
+            int quantidadeCursos = 0;
+
+            for (Matricula m : matriculas){
+                if (m.curso.equals(c)){
+                   somaNotas += m.nota;
+                    quantidadeCursos++;
+                }
+            }
+
+            if (somaNotas / quantidadeCursos > notaMediaDeCorte){
+                cursosComMediaMaiorQueRecebido.add(c.nome);
+            }
+        }
+
+        System.out.println(cursosComMediaMaiorQueRecebido);
     }
 
     // EXIBE um ranking de alunos baseado na media das notas de todas as matriculas
