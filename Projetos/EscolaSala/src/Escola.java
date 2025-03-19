@@ -171,6 +171,6 @@ public class Escola {
     // Exibe um relatorio geral com as info do sistema
     // (mostre todas as info nos prints)
     public void gerarRelatorioGeral(){
-
+        // DO NOTHING
     }
 }
