@@ -9,22 +9,22 @@ public class Main {
         Curso curso3 = new Curso("2222", "ADM", 260);
 
         Matricula matricula1 = new Matricula(aluno1, curso1);
-        matricula1.setNota(8);
+        matricula1.setNota(4);
 
         Matricula matricula2 = new Matricula(aluno2, curso1);
         matricula2.setNota(4);
 
         Matricula matricula3 = new Matricula(aluno1, curso2);
-        matricula3.setNota(10);
+        matricula3.setNota(4);
 
         Matricula matricula4 = new Matricula(aluno2, curso2);
-        matricula4.setNota(6);
+        matricula4.setNota(4);
 
         Matricula matricula5 = new Matricula(aluno1, curso3);
-        matricula5.setNota(6);
+        matricula5.setNota(4);
 
         Matricula matricula6 = new Matricula(aluno2, curso3);
-        matricula6.setNota(2);
+        matricula6.setNota(8);
 
         Escola escola = new Escola();
 
@@ -47,6 +47,6 @@ public class Main {
         System.out.println(matricula1.nota);
 
         escola.listarCursosComMediaAcima(6);
-        escola.buscarAlunoPorNome("Vito");
+        escola.rankearAlunos();
     }
 }

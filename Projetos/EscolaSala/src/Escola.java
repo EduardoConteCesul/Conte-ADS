@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 // Escola vai gerenciar o cadastro de alunos,
 // cursos e matrículas
@@ -140,6 +139,31 @@ public class Escola {
     // EXIBE um ranking de alunos baseado na media das notas de todas as matriculas
     // Ordene a lista de forma decrescente pela media
     public void rankearAlunos(){
+
+        List<MediaAluno> mediaAlunos = new ArrayList<>();
+
+
+        for (Aluno a : alunos){
+
+            MediaAluno mediaAluno = new MediaAluno();
+
+            double somaNotas = 0;
+            int quantidadeMatriculasDoAluno = 0;
+
+            for (Matricula m : matriculas){
+                if (a.equals(m.aluno)){
+                    somaNotas += m.nota;
+                    quantidadeMatriculasDoAluno++;
+                }
+            }
+
+            mediaAluno.setAluno(a);
+            mediaAluno.setMediaAluno( somaNotas / quantidadeMatriculasDoAluno);
+
+            mediaAlunos.add(mediaAluno);
+        }
+
+        mediaAlunos.sort(Collections.reverseOrder());
 
     }
 
