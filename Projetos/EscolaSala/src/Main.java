@@ -21,10 +21,10 @@ public class Main {
         matricula4.setNota(4);
 
         Matricula matricula5 = new Matricula(aluno1, curso3);
-        matricula5.setNota(4);
+        matricula5.setNota(8);
 
         Matricula matricula6 = new Matricula(aluno2, curso3);
-        matricula6.setNota(8);
+        matricula6.setNota(4);
 
         Escola escola = new Escola();
 
@@ -48,5 +48,7 @@ public class Main {
 
         escola.listarCursosComMediaAcima(6);
         escola.rankearAlunos();
+
+        escola.gerarRelatorioGeral();
     }
 }

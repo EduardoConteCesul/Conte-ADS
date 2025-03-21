@@ -100,11 +100,12 @@ public class Escola {
         matricula.setNota(nota);
     }
 
-    //Busca alunos pelo nome (case insensitive)
+
+    //Busca alunos pelo nome (case sensitive)
     public void buscarAlunoPorNome(String nome){
         for (Aluno a : alunos){
-            if (a.nome.equals(nome)){
-                System.out.printf("Aluno: " + a.nome + " Matricula: " + a.matricula);
+            if (a.nome.toLowerCase().equals(nome.toLowerCase())){
+                a.exibirInfo();
                 return;
             }
         }
@@ -151,7 +152,7 @@ public class Escola {
             int quantidadeMatriculasDoAluno = 0;
 
             for (Matricula m : matriculas){
-                if (a.equals(m.aluno)){
+                if (a.matricula.equals(m.aluno.matricula)){
                     somaNotas += m.nota;
                     quantidadeMatriculasDoAluno++;
                 }
@@ -163,15 +164,42 @@ public class Escola {
             mediaAlunos.add(mediaAluno);
         }
 
-        mediaAlunos.sort(Collections.reverseOrder());
+        mediaAlunos.sort((ma1, ma2) -> Double.compare(ma1.getMediaAluno(), ma2.getMediaAluno()));
 
+        int colocacao = 0;
+        for (MediaAluno mediaAluno : mediaAlunos){
+            System.out.printf("\n"+ ++colocacao + "º Lugar: " + mediaAluno.aluno.nome);
+        }
     }
 
 
     // Exibe um relatorio geral com as info do sistema
     // (mostre todas as info nos prints)
     public void gerarRelatorioGeral(){
-        // DO NOTHING
-        // Teste commit da minha conta
+
+        int totalAlunos = alunos.size();
+        int totalCursos = cursos.size();
+        int totalMatriculas = matriculas.size();
+
+        System.out.println("\n\n******************************************************");
+        System.out.println("\n             Relatorio do Sistema");
+        System.out.println("\nTotal de Alunos: " + totalAlunos);
+        System.out.println("\nTotal de Cursos: " + totalCursos);
+        System.out.println("\nTotal de Matriculas: " + totalMatriculas);
+
+
+        double somaNotas = 0;
+        int count = 0;
+
+        for (Matricula m : matriculas){
+
+            somaNotas += m.nota;
+
+            System.out.printf("\n \nMatricula " + ++count + ": \n");
+            m.exibirMatricula();
+        }
+
+        System.out.println("\nMédia Geral Das Notas: " + somaNotas / count);
     }
+
 }
