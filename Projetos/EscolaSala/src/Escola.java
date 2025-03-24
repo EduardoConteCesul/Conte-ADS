@@ -202,4 +202,5 @@ public class Escola {
         System.out.println("\nMédia Geral Das Notas: " + somaNotas / count);
     }
 
+//    Teste segurança branch
 }
