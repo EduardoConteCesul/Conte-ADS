@@ -1,0 +1,121 @@
+Atividade 1: Consultas Básicas
+
+Busque todos os municípios do estado do Acre.
+
+    {"uf": "Acre"}
+
+Busque um município específico pelo código do município.
+
+    {"codigo_municipio": "120001"}
+
+Busque todos os municípios com população estimada maior que 50.000.
+
+    {"populacao_estimada_ibge_2022": {"$gt": 50000}}
+
+Busque todos os municípios que não pertencem ao estado do Paraná.
+
+    { "uf": {"$ne" : "Paraná"}}
+
+Busque todos os municípios com população entre 10.000 e 20.000.
+
+    [
+	    {
+            "$match": {
+                "populacao_estimada_ibge_2022": { "$gt" : 10000, "$lt": 20000}
+                }
+	    }
+    ]
+
+Atividade 2: Atualização de Dados
+
+Atualize a população estimada de um município específico.
+
+    {
+        $set: {
+			"populacao_estimada_ibge_2022": 34680
+        },
+    }
+
+Verifique se a atualização foi realizada com sucesso.
+
+    {"municipio": "PR - BANDEIRANTES"}
+
+Atualize a população estimada de todos os municípios do estado do Acre para 15.000.
+
+    {
+        $set: {
+            "populacao_estimada_ibge_2022": 15000 
+        },
+    }
+
+Verifique se a atualização foi realizada corretamente.
+
+    {"uf": "Acre"}
+
+
+
+Atividade 3: Exclusão de Dados
+
+Exclua um município específico pelo código do município.
+
+    Utilizado o método delete com: {"codigo_municipio": "420005"}
+
+Verifique se o município foi excluído corretamente.
+
+{"codigo_municipio": "420005"}
+
+Exclua todos os municípios com população estimada menor que 5.000.
+
+    Utilizado método deleto:
+    {
+        "populacao_estimada_ibge_2022": { "$lt": 5000 }
+    }
+
+Verifique se os municípios foram excluídos corretamente.
+
+    {
+        "populacao_estimada_ibge_2022": { "$lt": 5000 }
+    }
+
+
+
+Atividade 4: Operadores de Agrupamento
+
+Conte o número de municípios por estado.
+
+    [
+        {
+            "$group": {
+                "_id": "$uf",
+                "total_municipios": { "$sum": 1 }
+            }
+        }
+    ]
+
+Calcule a média populacional por região de saúde.
+
+    [
+        {
+            "$group": {
+                "_id": "$regiao_saude",
+                "media_populacao": { "$avg": "$populacao_estimada_ibge_2022" }
+            }    
+        }
+    ]
+
+Encontre o município com a maior população em cada região de saúde.
+
+    [
+        {
+            "$group": {
+            "_id": "$regiao_saude",
+            "maior_populacao": { "$max": "$populacao_estimada_ibge_2022" }
+            }
+        }
+    ]
+
+Calcule a soma da população por estado, mas apenas para estados com mais de 50 municípios.
+
+
+
+Encontre a média populacional por região de saúde, mas apenas para regiões com mais de 10 municípios.s
