@@ -1,0 +1,161 @@
+ 
+1- 
+[
+  {
+    "$group": {
+      "_id": "$nomeRegiao",
+      "valor_total_regiao": { "$sum": "$VlComercializacao" }
+    }
+  },
+  {
+  "$sort": {
+    "valor_total_regiao": -1
+  }
+}
+]
+
+2-
+
+[
+  {
+    "$group": {
+      "_id": "$nomeIF",
+      "valor_total_if": { "$sum": "$VlComercializacao" }
+    }
+  },
+  {
+    "$match": {
+      "valor_total_if": { "$gt": 1000000}
+    }
+  },
+  {
+    "$project": {
+      "_id": 1,
+      "valor_total_if": 0,
+    }
+  }
+]
+
+3- 
+
+[
+  {
+    "$group": {
+      "_id": "$nomeUF",
+      "total_custeio": { "$sum": "$VlCusteio" },
+      "total_investimento": {"$sum": "$VlInvestimento"},
+      "total_comercializacao": {"$sum": "$VlComercializacao"},
+      "total_industrializacao": {"$sum": "$VlIndustrializacao"}    
+    }
+  }
+]
+
+4 - 
+
+[
+  {
+    "$project": {
+      "total_recursos": {
+        "$add": ["$VlComercializacao", "$VlCusteio", "$VlIndustrializacao", "$VlInvestimento"]
+      }
+    }
+  }
+]
+
+5-
+
+[
+  {
+    "$match": {
+      "AnoEmissao": 2024
+    }
+  },
+  {
+    "$group": {
+      "_id": "$nomeUF",
+      "total_operacoes": { "$sum": 1 }
+    }
+  }
+]
+
+6 - 
+
+[
+  {
+    "$group": {
+      "_id": "$nomeSegmento",
+      "total_custeio": { "$avg": "$VlCusteio" },
+      "total_investimento": {"$avg": "$VlInvestimento"},
+      "total_comercializacao": {"$avg": "$VlComercializacao"},
+      "total_industrializacao": {"$avg": "$VlIndustrializacao"}    
+    }
+  }
+]
+
+7 - 
+
+[
+  {
+    "$match": {
+      "$or": [
+        { "AreaCusteio": {
+          "$gt": 0 }
+        },
+        { 
+          "AreaInvestimento": {
+          "$gt": 0 }
+        }
+      ]
+    }
+  }
+]
+
+8 -
+
+[
+  {
+    "$project": {
+      "total_recursos": {
+        "$add": ["$VlComercializacao", "$VlCusteio", "$VlIndustrializacao", "$VlInvestimento"]
+      }
+    }
+  },
+    {
+    "$sort": {
+      "total_recursos": -1
+    }
+  },
+  {
+    "$limit": 10 
+  }
+]
+
+9 -
+
+[
+  {
+    "$group": {
+      "_id": "$Categoria",
+      "total_operacoes": { "$sum": 1 }
+    }
+  }
+]
+
+10 - 
+
+[
+  {
+    "$match": {
+      "cdPrograma": 999
+    }
+  },
+  FAzer um or aqui se é maior que zero
+  {
+    "$project": {
+      "total_recursos": {
+        "$add": ["$VlComercializacao", "$VlCusteio", "$VlIndustrializacao", "$VlInvestimento"]
+      }
+    }
+  }
+  
+]
