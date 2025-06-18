@@ -1,0 +1,101 @@
+coleção aluno
+
+[
+  {
+    "cliente_id": "U001",
+    "nome": "João Silva",
+    "email": "joao@gmail.com"
+  },
+  {
+    "cliente_id": "U002",
+    "nome": "Maria Oliveira",
+    "email": "maria@gmail.com"
+  },
+  {
+    "cliente_id": "U003",
+    "nome": "Pedro Souza",
+    "email": "pedro@gmail.com"
+  }
+]
+
+
+coleção emprestimos
+
+
+[
+  {
+    "_id": 2001,
+    "cliente_id": "U001",
+    "data_emprestimo": "2025-06-01",
+    "data_devolucao": "2025-06-10",
+    "status": "devolvido",
+    "livros": [
+      { 
+        "titulo": "1984", 
+        "autor": "George Orwell", 
+        "quantidade": 1, 
+        "preco_unitario": 5.00, 
+        "dias_emprestimo": 9 
+      },
+      { 
+        "titulo": "O Senhor dos Anéis", 
+        "autor": "J.R.R. Tolkien", 
+        "quantidade": 1, 
+        "preco_unitario": 7.00, 
+        "dias_emprestimo": 9 
+      }
+    ],
+    "multa": 0.0
+  },
+  {
+    "_id": 2002,
+    "cliente_id": "U002",
+    "data_emprestimo": "2025-06-03",
+    "data_devolucao": "2025-06-15",
+    "status": "atrasado",
+    "livros": [
+      { 
+        "titulo": "Dom Casmurro", 
+        "autor": "Machado de Assis", 
+        "quantidade": 1, 
+        "preco_unitario": 4.00, 
+        "dias_emprestimo": 12 
+      }
+    ],
+    "multa": 3.50
+  },
+  {
+    "_id": 2003,
+    "cliente_id": "U003",
+    "data_emprestimo": "2025-06-05",
+    "data_devolucao": null,
+    "status": "em andamento",
+    "livros": [
+      { 
+        "titulo": "O Pequeno Príncipe", 
+        "autor": "Antoine de Saint-Exupéry", 
+        "quantidade": 2, 
+        "preco_unitario": 3.50, 
+        "dias_emprestimo": 7 
+      }
+    ],
+    "multa": 0.0
+  },
+  {
+    "_id": 2004,
+    "cliente_id": "U001",
+    "data_emprestimo": "2025-06-07",
+    "data_devolucao": "2025-06-10",
+    "status": "devolvido",
+    "livros": [
+      { 
+        "titulo": "A Revolução dos Bichos", 
+        "autor": "George Orwell", 
+        "quantidade": 1, 
+        "preco_unitario": 5.00, 
+        "dias_emprestimo": 3 
+      }
+    ],
+    "multa": 0.0
+  }
+]
