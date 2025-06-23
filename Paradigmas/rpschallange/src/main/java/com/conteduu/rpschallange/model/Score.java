@@ -14,7 +14,14 @@ public class Score {
     private double winRate; // Percentual de vitorias
     private int window; // Qual é o range de otimizacao
 
-
+    public Score(String date, int wins, int draws, int losses, double winRate, int window) {
+        this.date = date;
+        this.wins = wins;
+        this.draws = draws;
+        this.losses = losses;
+        this.winRate = winRate;
+        this.window = window;
+    }
 
     public String getId() {
         return id;

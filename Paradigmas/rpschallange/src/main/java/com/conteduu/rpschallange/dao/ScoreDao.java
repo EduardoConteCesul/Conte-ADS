@@ -1,9 +1,14 @@
 package com.conteduu.rpschallange.dao;
 
 
+import com.conteduu.rpschallange.model.Score;
 import com.conteduu.rpschallange.util.MongoConfig;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
+
+import java.util.ArrayList;
+import java.util.List;
 
 //Data Access Object
 public class ScoreDao {
@@ -11,11 +16,32 @@ public class ScoreDao {
     // Metodo list(), vai devolver List<String> prontas para exibir num listView
     // O metodo List deveria retornar uma lista de scores.
 
-    private final MongoCollection<Document> collection = MongoConfig.scores().getCollection("players");
+    private final MongoCollection<Document> collection = MongoConfig.scores();
 
-    public void list(){
+    public void save(Score score){
 
-
-
+        if (score == null) return;
+        collection.insertOne(
+        new Document("date", score.getDate()).
+                append("wins", score.getWins()).
+                append("draws", score.getDraws()).
+                append("losses", score.getLosses()).
+                append("winRate", score.getWinRate()).
+                append("window", score.getWindow())
+        );
     }
+
+    public List<String> list(){
+
+        List<String> scores = new ArrayList<>();
+        FindIterable<Document> documents = collection.find();
+        documents.forEach((document) ->
+                    scores.add(document.getString("date") +
+                        document.getInteger("wins") +
+                        document.getInteger("draws") +
+                        document.getInteger("losses"))
+        );
+        return scores;
+    }
+
 }

@@ -12,5 +12,4 @@ public final class MongoConfig {
     public static MongoCollection<Document> scores(){
         return CLIENT.getDatabase("rps_db").getCollection("scores");
     }
-
 }
