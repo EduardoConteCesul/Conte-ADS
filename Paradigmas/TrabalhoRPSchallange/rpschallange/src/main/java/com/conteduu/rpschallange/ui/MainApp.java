@@ -1,9 +1,10 @@
 package com.conteduu.rpschallange.ui;
 
 import com.conteduu.rpschallange.model.Move;
+import com.conteduu.rpschallange.model.PlayerStats;
+import com.conteduu.rpschallange.util.CpuStratagy;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,6 +21,9 @@ public class MainApp extends Application {
     private Label labelStatusDaPartida, labelPlayer, labelCPU, labelRes;
     private ProgressBar progressoPartida;
     private HBox jogadasPossiveis;
+
+    private CpuStratagy cpuStratagy = new CpuStratagy();
+    PlayerStats playerStats;
 
     @Override
     public void start(Stage stage) {
@@ -66,10 +70,9 @@ public class MainApp extends Application {
         );
 
         labelStatusDaPartida = new Label("V: 0 | D:0 | E:0");
-        progressoPartida = new ProgressBar(80);
+        progressoPartida = new ProgressBar(0);
 
         jogadasPossiveis = new HBox(card("PEDRA"), card("PAPEL"), card("TESOURA"));
-        // jogadasPossiveis.setPadding(new Insets(10));
 
         // Componente com todas as Hbox
         VBox root = new VBox(
@@ -107,6 +110,19 @@ public class MainApp extends Application {
 
     private void playRound(Move jogadaAtual){
 
+        playerStats = new PlayerStats();
+
+        labelPlayer.setText("Você - " + jogadaAtual.toString());
+
+        Move jogadaCPU = cpuStratagy.proximaJogada(jogadaAtual);
+        labelCPU.setText("CPU - " + jogadaCPU);
+
+        int resultado = jogadaAtual.versus(jogadaCPU);
+        playerStats.register(resultado);
+
+        labelRes.setText("Resultado: " + ((resultado > 0) ? "Vitoria": resultado == 0 ? "Empate": "Derrota"));
+
+       // Progress Bar
     }
 
     public static void main(String[] args) {

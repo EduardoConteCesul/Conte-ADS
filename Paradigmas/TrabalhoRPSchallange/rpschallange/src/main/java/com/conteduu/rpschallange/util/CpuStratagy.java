@@ -11,6 +11,7 @@ package com.conteduu.rpschallange.util;
 import com.conteduu.rpschallange.model.Move;
 
 import java.util.ArrayDeque;
+import java.util.HashMap;
 
 public class CpuStratagy {
     /*
@@ -28,6 +29,14 @@ public class CpuStratagy {
 
     private static final int MAX_QUEU_HISTORIC = 3;
 
+    ArrayDeque<Move> historic = new ArrayDeque<>();
+
+    HashMap<Move, Integer> qntdJogadas = new HashMap<>(){{
+            put(Move.PEDRA, 0);
+            put(Move.PAPEL, 0);
+            put(Move.TESOURA, 0);
+    }};
+
     public Move proximaJogada(Move jogadaAtual){
         /*
             Atualizar a Deque com a jogada mais recente
@@ -41,16 +50,44 @@ public class CpuStratagy {
 
          */
 
-        ArrayDeque<Move> historic = new ArrayDeque<>();
-
         if (historic.size() < MAX_QUEU_HISTORIC) {
-            Move jogadaCPU = Move.random();
-            historic.add(jogadaCPU);
-            return jogadaCPU;
+            historic.add(jogadaAtual);
+            qntdJogadas.put(jogadaAtual, qntdJogadas.getOrDefault(jogadaAtual, 0) + 1);
+            return Move.random();
         }
 
-        // Verificar quais as ultimas jogadas mais utilizadas
+        Move maisVezesApareceu = null;
+        Integer qntdDeterminadaJogadaApareceu = 0;
+        for (Move move: qntdJogadas.keySet()){
 
+            Integer qntdJogada = qntdJogadas.get(move);
+
+            if ( qntdJogada > qntdDeterminadaJogadaApareceu){
+                qntdDeterminadaJogadaApareceu = qntdJogada;
+                maisVezesApareceu = move;
+            }
+        }
+
+        switch (maisVezesApareceu){
+            case PEDRA -> {
+                removeFirstAddFinal(jogadaAtual);
+                return Move.PAPEL;
+            }
+            case PAPEL -> {
+                removeFirstAddFinal(jogadaAtual);
+                return Move.TESOURA;
+            }
+            case TESOURA -> {
+                removeFirstAddFinal(jogadaAtual);
+                return Move.PEDRA;
+            }
+        }
         return null;
     }
+
+    private void removeFirstAddFinal(Move jogadaAtual){
+        historic.removeFirst();
+        historic.add(jogadaAtual);
+    }
+
 }
