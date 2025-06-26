@@ -32,6 +32,7 @@ public class MainApp extends Application {
     private Button btnPlay, btnReset;
     private Label lbsStats, lblPlayer, lblCPU, lblRes;
     private ProgressBar bar;
+    private ListView<String> listView;
     private HBox cardBox;
     private int count = 0;
     private ScoreDao scoreDao;
@@ -39,8 +40,6 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) {
-
-
 
         ComboBox<Move> cbo = new ComboBox<>(
                 FXCollections.observableArrayList(Move.values())
@@ -74,6 +73,8 @@ public class MainApp extends Application {
         btnPlay.setOnAction( e -> playRound(cbo.getValue()));
 
         btnReset.setOnAction( e -> resetGame());
+
+        listView = new ListView<>();
 
         // -------------- Montagem do Layout -------------- //
 

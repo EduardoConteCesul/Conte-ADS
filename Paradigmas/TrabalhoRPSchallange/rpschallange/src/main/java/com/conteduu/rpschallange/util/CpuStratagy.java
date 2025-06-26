@@ -1,7 +1,6 @@
 package com.conteduu.rpschallange.util;
 
 /*
-
     "IA adaptativa"
     - Manter as N (window) ultimas jogadas do HUMANO
     - Contar qual jogada aparece mais nesse intervalo
@@ -27,8 +26,6 @@ public class CpuStratagy {
 
     * */
 
-    private static final int MAX_QUEU_HISTORIC = 3;
-
     ArrayDeque<Move> historic = new ArrayDeque<>();
 
     HashMap<Move, Integer> qntdJogadas = new HashMap<>(){{
@@ -37,7 +34,9 @@ public class CpuStratagy {
             put(Move.TESOURA, 0);
     }};
 
-    public Move proximaJogada(Move jogadaAtual){
+
+
+    public Move proximaJogada(Move jogadaAtual, int window){
         /*
             Atualizar a Deque com a jogada mais recente
             Se passou o limite da janela, descartar o elemento
@@ -50,7 +49,7 @@ public class CpuStratagy {
 
          */
 
-        if (historic.size() < MAX_QUEU_HISTORIC) {
+        if (historic.size() < window) {
             historic.add(jogadaAtual);
             qntdJogadas.put(jogadaAtual, qntdJogadas.getOrDefault(jogadaAtual, 0) + 1);
             return Move.random();
@@ -71,6 +70,7 @@ public class CpuStratagy {
         switch (maisVezesApareceu){
             case PEDRA -> {
                 removeFirstAddFinal(jogadaAtual);
+
                 return Move.PAPEL;
             }
             case PAPEL -> {
@@ -81,13 +81,22 @@ public class CpuStratagy {
                 removeFirstAddFinal(jogadaAtual);
                 return Move.PEDRA;
             }
+            default -> {
+                return  null;
+            }
         }
-        return null;
     }
 
     private void removeFirstAddFinal(Move jogadaAtual){
         historic.removeFirst();
         historic.add(jogadaAtual);
+        qntdJogadas.put(jogadaAtual, qntdJogadas.getOrDefault(jogadaAtual, 0) - 1);
     }
 
+    public void resetStrategy(){
+        historic.clear();
+        qntdJogadas.put(Move.PEDRA, 0);
+        qntdJogadas.put(Move.PAPEL, 0);
+        qntdJogadas.put(Move.TESOURA, 0);
+    }
 }

@@ -36,10 +36,10 @@ public class ScoreDao {
         List<String> scores = new ArrayList<>();
         FindIterable<Document> documents = collection.find();
         documents.forEach((document) ->
-                    scores.add(document.getString("date") +
-                        document.getInteger("wins") +
-                        document.getInteger("draws") +
-                        document.getInteger("losses"))
+                    scores.add("Data " + document.getString("date") +
+                        " Vitorias: " + document.getInteger("wins") +
+                        " Empates: " + document.getInteger("draws") +
+                        " Derrotas: " +document.getInteger("losses"))
         );
         return scores;
     }
