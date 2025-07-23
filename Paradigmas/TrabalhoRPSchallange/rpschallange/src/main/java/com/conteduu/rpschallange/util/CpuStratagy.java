@@ -34,8 +34,6 @@ public class CpuStratagy {
             put(Move.TESOURA, 0);
     }};
 
-
-
     public Move proximaJogada(Move jogadaAtual, int window){
         /*
             Atualizar a Deque com a jogada mais recente
